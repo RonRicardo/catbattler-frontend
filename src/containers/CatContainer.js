@@ -1,6 +1,6 @@
 import React from 'react';
 import { fetchIndex } from '../adapter/adapter';
-import CatNav from '../CatNav';
+import CatNav from './CatNav';
 import CatDetail from '../components/CatDetail';
 
 
@@ -33,6 +33,7 @@ export default class CatContainer extends React.Component {
         :
          <p></p>
         }
+        {this.p}
         </div>
 
 
