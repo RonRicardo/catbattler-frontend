@@ -10,6 +10,7 @@ export default class TeamList extends React.Component {
   }
 
   render() {
+    console.log("REANDER TEAM LIST")
     return (
       <React.Fragment>
       <h4>Team: {this.props.team.name}</h4>

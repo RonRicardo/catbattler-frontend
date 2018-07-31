@@ -29,11 +29,13 @@ export default class CatContainer extends React.Component {
       <CatNav  catsArray={this.state.catsArray} selectCat={this.selectCat}/>
         <div>
         {this.state.selectedCat ?
-          <CatDetail getBattleCatObject={this.props.getBattleCatObject} cat={this.state.selectedCat} />
+          <CatDetail
+           currentTeamId={this.props.currentTeamId}
+           getBattleCatObject={this.props.getBattleCatObject} cat={this.state.selectedCat} />
         :
          <p></p>
         }
-        
+
         </div>
 
 

@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import CatContainer from './containers/CatContainer'
 import TeamContainer from './containers/TeamContainer'
-import { fetchUser } from './adapter/adapter'
+import { fetchUser, postBattleCat } from './adapter/adapter'
 
 
 class App extends Component {
@@ -31,7 +31,9 @@ class App extends Component {
       return {
         battleCatObject: {...previousState.battleCatObject, ...catObject}
       }
-    }, () => console.log("this is in app, battleCatObject: ", this.state.battleCatObject))
+    }, () => {
+      postBattleCat(this.state.battleCatObject)
+    })
   }
 
   getCurrentTeamId = (teamId) => {
@@ -50,8 +52,11 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Welcome to CAT BATTLER</h1>
         </header>
-        <CatContainer getBattleCatObject={this.getBattleCatObject} />
-        { this.state.currentUser? <TeamContainer getCurrentTeamId={this.getCurrentTeamId} user={this.state.currentUser} teams={this.state.currentUserTeams}/>
+        <CatContainer
+        currentTeamId={this.state.currentTeamId}
+        getBattleCatObject={this.getBattleCatObject} />
+        { this.state.currentUser?
+            <TeamContainer      getCurrentTeamId={this.getCurrentTeamId} user={this.state.currentUser} teams={this.state.currentUserTeams}/>
             :
           <div>Create a team</div>}
       </div>

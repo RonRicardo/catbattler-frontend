@@ -36,19 +36,26 @@ export default class CatDetail extends React.Component {
   }
 
   renderForm = () => {
-    return (
-      <React.Fragment>
-        <form onSubmit={this.handleSubmit}>
-          <label>Name:
-            <input type="text" id="catName" name="name" onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
-      </React.Fragment>
-    )
+    if (this.props.currentTeamId){
+      return (
+        <React.Fragment>
+          <form onSubmit={this.handleSubmit}>
+            <label>Name:
+              <input type="text" id="catName" name="name" onChange={this.handleChange} />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        </React.Fragment>
+      )
+    } else {
+      return (
+        <p> Select a team from the right! </p>
+      )
+    }
   }
 
   render(){
+    console.log('logging current team', this.props)
     return (
       <div className="row">
       <div className="col s6 offset-s3">
