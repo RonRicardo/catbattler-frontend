@@ -30,7 +30,9 @@ class App extends Component {
           <h1 className="App-title">Welcome to CAT BATTLER</h1>
         </header>
         <CatContainer />
-        { this.state.currentUserTeams && <TeamContainer teams={this.state.currentUserTeams}/> }
+        { this.state.currentUser? <TeamContainer user={this.state.currentUser} teams={this.state.currentUserTeams}/>
+            :
+          <div>Create a team</div>}
       </div>
     );
   }
