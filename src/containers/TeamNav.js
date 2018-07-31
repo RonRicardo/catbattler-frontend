@@ -9,20 +9,24 @@ state = {
 }
 
   handleTeamSelect = (selectedTeam) => {
-    this.setState({team: selectedTeam}, () => console.log(this.state.team))
+    this.setState({team: selectedTeam})
+    this.props.getCurrentTeamId(selectedTeam.id)
   }
 
   renderTeams = () => {
     return this.props.teams.map(
       (team) => {
-        return (<React.Fragment>
-                <NavItem onClick={() => this.handleTeamSelect(team)}>{team.name}</NavItem>
-                <NavItem divider />
+        return (<React.Fragment key={team.id}>
+                <li style={{textAlign: 'center'}} onClick={() => this.handleTeamSelect(team)}>{team.name}</li>
+                {/* <NavItem divider /> */}
                 </React.Fragment> )
       }
     )
   }
 
+  handleCreate = () => {
+    console.log("in handleCreate, id:", this.props.user.id)
+  }
 
   render() {
     return (
@@ -31,14 +35,19 @@ state = {
       trigger={<Button>idk why this breaks</Button>}
       options={{
         closeOnMouseLeave: true,
-        edge: 'r'
+        edge: 'right'
       }}
       >
-      <h2>Welcome {this.props.user.username}</h2>
+      <h2>Welcome, {this.props.user.username}</h2>
         <Dropdown trigger={
             <Button>Teams!</Button>
             }>
-          {this.renderTeams()}
+            <ul>
+              {this.renderTeams()}
+              <li style={{textAlign: 'center'}} onClick={this.handleCreate} >{'Create Team'}</li>
+            </ul>
+
+
         </Dropdown>
         { this.state.team ? <TeamList team={this.state.team} />
           :

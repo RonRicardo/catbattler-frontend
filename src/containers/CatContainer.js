@@ -20,20 +20,20 @@ export default class CatContainer extends React.Component {
   }
 
   selectCat = (cat) => {
-    this.setState({selectedCat: cat}, () => console.log(this.state.selectedCat) )
+    this.setState({selectedCat: cat})
   }
 
   render() {
     return (
       <div>
-      <CatNav catsArray={this.state.catsArray} selectCat={this.selectCat}/>
+      <CatNav  catsArray={this.state.catsArray} selectCat={this.selectCat}/>
         <div>
         {this.state.selectedCat ?
-          <CatDetail cat={this.state.selectedCat} />
+          <CatDetail getBattleCatObject={this.props.getBattleCatObject} cat={this.state.selectedCat} />
         :
          <p></p>
         }
-        {this.p}
+        
         </div>
 
 

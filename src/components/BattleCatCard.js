@@ -15,7 +15,6 @@ export default class BattleCatCard extends React.Component {
   }
 
   render() {
-    console.log(this.props.battleCat)
     return (
     <div  onClick={() => this.handleClick()}>
       <Image

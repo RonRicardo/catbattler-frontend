@@ -10,7 +10,9 @@ class App extends Component {
 
   state = {
     currentUser: null,
-    currentUserTeams: []
+    currentUserTeams: [],
+    currentTeamId: null,
+    battleCatObject: {}
   }
 
   componentDidMount(){
@@ -19,8 +21,27 @@ class App extends Component {
         this.setState(
           {currentUser: user,
            currentUserTeams: user.teams
-         }, () => console.log(this.state.currentUser))
+         })
     })
+  }
+
+  getBattleCatObject = (catObject) => {
+
+    this.setState((previousState) => {
+      return {
+        battleCatObject: {...previousState.battleCatObject, ...catObject}
+      }
+    }, () => console.log("this is in app, battleCatObject: ", this.state.battleCatObject))
+  }
+
+  getCurrentTeamId = (teamId) => {
+
+    this.setState((previousState) => {
+      return {
+        currentTeamId: teamId,
+        battleCatObject: {...previousState.battleCatObject, team_id: teamId}
+      }
+    }, () => console.log("this is in app, battleCatObject: ", this.state.battleCatObject))
   }
 
   render() {
@@ -29,8 +50,8 @@ class App extends Component {
         <header className="App-header">
           <h1 className="App-title">Welcome to CAT BATTLER</h1>
         </header>
-        <CatContainer />
-        { this.state.currentUser? <TeamContainer user={this.state.currentUser} teams={this.state.currentUserTeams}/>
+        <CatContainer getBattleCatObject={this.getBattleCatObject} />
+        { this.state.currentUser? <TeamContainer getCurrentTeamId={this.getCurrentTeamId} user={this.state.currentUser} teams={this.state.currentUserTeams}/>
             :
           <div>Create a team</div>}
       </div>

@@ -5,7 +5,7 @@ export default class TeamList extends React.Component {
 
   renderBattleCatCard = () => {
     return this.props.team.battle_cats.map( (battleCat) => {
-      return <BattleCatCard battleCat={battleCat} />
+      return <BattleCatCard battleCat={battleCat} key={battleCat.id} />
     })
   }
 
