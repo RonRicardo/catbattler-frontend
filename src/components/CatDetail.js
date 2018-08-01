@@ -17,7 +17,7 @@ export default class CatDetail extends React.Component {
       cat_id: this.props.cat.id
     }
     this.props.getBattleCatObject(catObject)
-
+    this.handleClick()
   }
 
   handleChange = (event) => {
