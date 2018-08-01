@@ -6,7 +6,12 @@ export default class TeamContainer extends React.Component {
     console.log("RENDERTEAMCONTAINERYO")
     return (
       <div>
-      <TeamNav getCurrentTeamId={this.props.getCurrentTeamId} user={this.props.user} teams={this.props.teams} />
+      <TeamNav
+        createTeam={this.props.createTeam}
+        getCurrentTeamId={this.props.getCurrentTeamId}
+        user={this.props.user}
+        teams={this.props.teams}
+      />
       </div>
     );
   }

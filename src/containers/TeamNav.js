@@ -5,7 +5,9 @@ import TeamList from './TeamList';
 export default class TeamNav extends React.Component {
 
 state = {
-  team: null
+  team: null,
+  form: false,
+  teamName: ""
 }
 
   handleTeamSelect = (selectedTeam) => {
@@ -24,8 +26,39 @@ state = {
     )
   }
 
+  renderForm = () => {
+
+      return (
+        <React.Fragment>
+          <form onSubmit={this.handleSubmit}>
+            <label>Name:
+              <input type="text"  name="teamName" onChange={this.handleChange} />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        </React.Fragment>
+      )
+  }
+
   handleCreate = () => {
-    console.log("in handleCreate, id:", this.props.user.id)
+    this.setState((previousState) => {
+      return {
+        form: !previousState.form
+      }
+    })
+  }
+
+  handleChange = (event) => {
+      event.persist();
+      this.setState({
+        [event.target.name]: event.target.value
+      })
+  }
+
+  handleSubmit = (event) => {
+    event.preventDefault()
+    this.props.createTeam(this.state.teamName)
+    this.handleCreate()
   }
 
   render() {
@@ -46,9 +79,9 @@ state = {
               {this.renderTeams()}
               <li style={{textAlign: 'center'}} onClick={this.handleCreate} >{'Create Team'}</li>
             </ul>
-
-
         </Dropdown>
+
+        {this.state.form && this.renderForm()}
         { this.state.team ? <TeamList team={this.state.team} />
           :
           <p> No team selected </p>

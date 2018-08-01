@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import CatContainer from './containers/CatContainer'
 import TeamContainer from './containers/TeamContainer'
-import { fetchUser, postBattleCat } from './adapter/adapter'
+import { fetchUser, postBattleCat, postTeam } from './adapter/adapter'
 
 
 class App extends Component {
@@ -15,13 +15,30 @@ class App extends Component {
     battleCatObject: {}
   }
 
-  componentDidMount(){
+  populateUser = () => {
     fetchUser()
       .then(user => {
         this.setState(
           {currentUser: user,
            currentUserTeams: user.teams
          })
+    })
+  }
+
+
+
+  componentDidMount(){
+    this.populateUser()
+  }
+
+  createTeam = (teamName) => {
+    postTeam({name: teamName, trainer_id: this.state.currentUser.id})
+    .then(team => {
+      this.setState((previousState => {
+        return {
+          currentUserTeams: [...previousState.currentUserTeams, team]
+        }
+      }))
     })
   }
 
@@ -33,6 +50,7 @@ class App extends Component {
       }
     }, () => {
       postBattleCat(this.state.battleCatObject)
+      .then(data => this.populateUser())
     })
   }
 
@@ -43,7 +61,7 @@ class App extends Component {
         currentTeamId: teamId,
         battleCatObject: {...previousState.battleCatObject, team_id: teamId}
       }
-    }, () => console.log("this is in app, battleCatObject: ", this.state.battleCatObject))
+    })
   }
 
   render() {
@@ -56,7 +74,12 @@ class App extends Component {
         currentTeamId={this.state.currentTeamId}
         getBattleCatObject={this.getBattleCatObject} />
         { this.state.currentUser?
-            <TeamContainer      getCurrentTeamId={this.getCurrentTeamId} user={this.state.currentUser} teams={this.state.currentUserTeams}/>
+            <TeamContainer
+              createTeam={this.createTeam}
+              getCurrentTeamId={this.getCurrentTeamId}
+              user={this.state.currentUser}
+              teams={this.state.currentUserTeams}
+            />
             :
           <div>Create a team</div>}
       </div>
