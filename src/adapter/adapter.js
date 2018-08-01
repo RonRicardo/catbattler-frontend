@@ -1,5 +1,5 @@
 const indexCat = 'http://localhost:3000/api/v1/cats'
-const trainerUrl = 'http://localhost:3000/api/v1/trainers/1'
+const trainerUrl = 'http://localhost:3000/api/v1/trainers/'
 const battleCatUrl = 'http://localhost:3000/api/v1/battle_cats'
 const teamUrl = `http://localhost:3000/api/v1/teams/`
 
@@ -8,8 +8,8 @@ const fetchIndex = () => {
     .then(resp => resp.json())
 }
 
-const fetchUser = () => {
-  return fetch(trainerUrl)
+const fetchUser = (username) => {
+  return fetch(`${trainerUrl}${username}`)
     .then(resp => resp.json())
 }
 

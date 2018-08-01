@@ -65,7 +65,7 @@ state = {
     return (
     <SideNav
       fixed={true}
-      trigger={<Button>idk why this breaks</Button>}
+      trigger={<Button> </Button>}
       options={{
         closeOnMouseLeave: true,
         edge: 'right'

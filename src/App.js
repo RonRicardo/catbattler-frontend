@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import CatContainer from './containers/CatContainer'
 import TeamContainer from './containers/TeamContainer'
+import TrainerLogIn from './components/TrainerLogIn'
 import { fetchUser, postBattleCat, postTeam } from './adapter/adapter'
 
 
@@ -15,8 +16,8 @@ class App extends Component {
     battleCatObject: {}
   }
 
-  populateUser = () => {
-    fetchUser()
+  populateUser = (username) => {
+    fetchUser(username)
       .then(user => {
         this.setState(
           {currentUser: user,
@@ -25,11 +26,9 @@ class App extends Component {
     })
   }
 
-
-
-  componentDidMount(){
-    this.populateUser()
-  }
+  // componentDidMount(){
+  //   this.populateUser()
+  // }
 
   createTeam = (teamName) => {
     postTeam({name: teamName, trainer_id: this.state.currentUser.id})
@@ -39,12 +38,6 @@ class App extends Component {
           currentUserTeams: [...previousState.currentUserTeams, team]
         }
       }))
-    })
-  }
-
-  lookUpTeam = () => {
-    return this.state.currentUserTeams.find((team) => {
-      return team.id === this.state.currentTeamId
     })
   }
 
@@ -83,13 +76,9 @@ class App extends Component {
     })
   }
 
-  render() {
-    console.log("this is app, we looking up team", this.lookUpTeam());
+  renderApp = () => {
     return (
-      <div className="App">
-        <header className="App-header">
-          <h1 className="App-title">Welcome to CAT BATTLER</h1>
-        </header>
+      <React.Fragment>
         <CatContainer
         currentTeamId={this.state.currentTeamId}
         getBattleCatObject={this.getBattleCatObject} />
@@ -102,9 +91,24 @@ class App extends Component {
             />
             :
           <div>Create a team</div>}
-      </div>
+      </React.Fragment>
     );
   }
+
+  render() {
+    console.log(this.state.currentUser)
+    return (
+      <div className="App">
+        <header className="App-header">
+          <h1 className="App-title">Welcome to CAT BATTLER</h1>
+        </header>
+      <React.Fragment>
+        { this.state.currentUser ? this.renderApp() : <TrainerLogIn populateUser={this.populateUser} /> }
+      </React.Fragment>
+    </div>
+    )
+  }
+
 }
 
 export default App;
