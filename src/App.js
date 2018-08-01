@@ -42,6 +42,12 @@ class App extends Component {
     })
   }
 
+  lookUpTeam = () => {
+    return this.state.currentUserTeams.find((team) => {
+      return team.id === this.state.currentTeamId
+    })
+  }
+
   getBattleCatObject = (catObject) => {
 
     this.setState((previousState) => {
@@ -50,7 +56,20 @@ class App extends Component {
       }
     }, () => {
       postBattleCat(this.state.battleCatObject)
-      .then(data => this.populateUser())
+      .then(battleCat => {
+        this.setState((previousState) =>{
+          return {
+            currentUserTeams: previousState.currentUserTeams.map((team) =>{
+              if(team.id === previousState.currentTeamId){
+                team.battle_cats = [...team.battle_cats, battleCat]
+                return team
+              } else {
+                return team
+              }
+            })
+          }
+        })
+      })
     })
   }
 
@@ -65,6 +84,7 @@ class App extends Component {
   }
 
   render() {
+    console.log("this is app, we looking up team", this.lookUpTeam());
     return (
       <div className="App">
         <header className="App-header">
